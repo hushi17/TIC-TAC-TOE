@@ -1,4 +1,4 @@
-/* === Reset and Layout === */
+/* === Base Styles === */
 * {
     margin: 0;
     padding: 0;
@@ -6,7 +6,9 @@
 }
 
 body {
-    background-color: #4f3972e2;
+    background: linear-gradient(135deg, #000000 0%, #060110 100%);
+    background-image: radial-gradient(circle at top left, rgba(255, 255, 255, 0.04), transparent 70%),
+        radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.03), transparent 70%);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     height: 100vh;
     display: flex;
@@ -16,240 +18,232 @@ body {
     overflow: hidden;
 }
 
+/* Subtle floating particles (ghibli style sparkle) */
+body::before {
+    content: "";
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    opacity: 0.05;
+    pointer-events: none;
+    animation: sparkleMove 60s linear infinite;
+    z-index: 1;
+}
+
+@keyframes sparkleMove {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(-100px, -100px);
+    }
+}
+
 main {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
+    gap: 2rem;
+    width: 100%;
+    max-width: 500px;
+    padding: 2rem;
 }
 
 /* === Title === */
 h1 {
-    font-size: 2.5rem;
-    font-weight: bolder;
-    font-family: 'Trebuchet MS', cursive;
-    color: #0b000e;
-    align-self: flex-start;
-    margin-bottom: 1rem;
-}
-
-/* === Container === */
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-/* === Game Grid === */
-.game {
-    height: 60vmin;
-    width: 60vmin;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5vmin;
-}
-
-/* === Game Box === */
-.box {
-    height: 18vmin;
-    width: 18vmin;
-    border-radius: 1rem;
-    border: none;
-    font-size: 8vmin;
-    color: #23072a;
-    background-color: #f3e5f5;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    border: 2px dashed rgba(255, 255, 255, 0.3);
-    background-blend-mode: soft-light;
-    background-image: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1), transparent 80%);
-    filter: brightness(1.02) saturate(1.05);
-    font-family: 'Comic Neue', cursive, sans-serif;
+    font-size: 3rem;
     font-weight: bold;
-    letter-spacing: 2px;
-    box-shadow: 0 0 1rem rgba(0, 0, 0, 1);
-    touch-action: manipulation;
+    color: #3e1645;
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.6s ease-out;
 }
 
-.box.x {
-    color: #861412;
-}
-
-.box.o {
-    color: #142179;
-}
-
-.box:hover {
-    transform: perspective(500px) translateY(-5px) rotateX(5deg) rotateY(5deg);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 30px rgba(37, 18, 71, 0.6);
-}
-
-.box:hover::after {
-    opacity: 1;
-}
-
-.box::after {
-    content: "";
-    position: absolute;
+/* === Modal Styles === */
+.modal {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 1rem;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, transparent 50%, rgba(255, 255, 255, 0.2) 100%);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.box:active {
-    transform: translateY(4px) scale(0.98);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), inset 0 -1px 2px rgba(0, 0, 0, 0.1);
-}
-
-/* === Winner Box === */
-.winner-box {
-    animation: pulse 0.5s ease 3, float 6s ease-in-out infinite;
-    box-shadow: 0 0 20px rgba(215, 200, 243, 0.8), 0 0 40px rgba(215, 200, 243, 0.6);
-    border: 2px dashed #31046c;
-}
-
-/* === Buttons === */
-#reset-btn,
-#new-btn {
-    padding: 1rem 2rem;
-    font-size: 1.25rem;
-    border-radius: 1rem;
-    border: none;
-    transition: all 0.3s ease;
-    background-blend-mode: lighten;
-    filter: brightness(1.05);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
-    border: 2px dashed rgba(255, 255, 255, 0.3);
-    animation: buttonPulse 4s ease-in-out infinite;
-}
-
-#reset-btn {
-    display: block;
-    margin: 2rem auto 0 auto;
-    background-color: #527148c5;
-    color: #25072c;
-    position: relative;
-    overflow: hidden;
-
-}
-
-#new-btn {
-    background-color: #191913;
-    color: #fff;
-}
-
-#reset-btn::before {
-    content: "";
-    position: absolute;
-    top: -100%;
-    left: -100%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
-    transform: rotate(30deg);
-    transition: all 0.6s ease;
-}
-
-#reset-btn:hover::before {
-    left: 100%;
-    top: 100%;
-}
-
-#reset-btn:hover,
-#new-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: inset 0 -4px 0 #3f5141, 0 12px 20px rgba(0, 0, 0, 0.25), 0 0 20px rgba(255, 255, 255, 0.2);
-}
-
-#reset-btn:active,
-#new-btn:active {
-    transform: scale(0.97) translateY(2px);
-    box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.2);
-    border-color: #490c49;
-    background-color: #af8baf;
-}
-
-/* === Message Styling === */
-#msg {
-    color: #ffffc7;
-    font-size: 5vmin;
-    font-family: 'Dancing Script', cursive;
-    font-weight: bolder;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.result-container {
-    margin: 1.5rem 0;
-    min-height: 2rem;
-    text-align: center;
-}
-
-#result-msg {
-    color: #280a31;
-    font-size: 1.5rem;
-    font-weight: bold;
-    height: 2rem;
-}
-
-.msg-container {
-    height: 100vmin;
+    background-color: rgba(101, 86, 114, 0.6);
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    gap: 4rem;
+    z-index: 100;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+    background-color: #fbe6fb;
+    padding: 2rem;
+    border-radius: 1rem;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.15);
+    animation: floatUp 0.4s ease-out;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal h2 {
+    color: #280a31;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.options {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.option-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 0.8rem;
+    border: none;
+    background-color: #deb8e0;
+    color: #3f1a53;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 100px;
+    font-weight: bold;
+    box-shadow: inset 0 -4px #c6a0c9;
+}
+
+.option-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.option-btn:active {
+    transform: translateY(2px);
+    box-shadow: inset 0 4px #c6a0c9;
+}
+
+.option-btn.selected {
+    background-color: #9c27b0;
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(156, 39, 176, 0.6);
 }
 
 .hide {
     display: none;
 }
 
+/* === Game Board === */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.game {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    width: 100%;
+    max-width: 400px;
+    margin: 1rem 0;
+}
+
+.box {
+    aspect-ratio: 1/1;
+    background-color: #d9b7f3;
+    border-radius: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: inset 0 -4px #a484b0;
+}
+
+.box:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 10px rgba(12, 3, 3, 0.2);
+}
+
+.box:active {
+    transform: scale(0.98);
+    box-shadow: inset 0 4px #c9b6d0;
+}
+
+.box.x {
+    color: #71100f;
+}
+
+.box.o {
+    color: #152276;
+}
+
+.box:disabled {
+    cursor: not-allowed;
+    opacity: 0.9;
+}
+
+.winner-box {
+    animation: pulse 0.5s ease 3;
+    box-shadow: 0 0 20px rgba(215, 200, 243, 0.8);
+    border: 2px dashed #210a3f;
+}
+
+/* === Result & Reset === */
+#result-msg {
+    color: #1a011e;
+    font-size: 1.5rem;
+    margin: 1rem 0;
+    min-height: 2rem;
+    text-align: center;
+    text-shadow: 0 0 5px rgba(36, 4, 4, 0.3);
+}
+
+#reset-btn {
+    padding: 0.8rem 1.8rem;
+    background-color: #8ab783;
+    color: rgb(3, 46, 1);
+    border: none;
+    border-radius: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.2s ease;
+    box-shadow: inset 0 -4px #518552;
+}
+
+#reset-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+#reset-btn:active {
+    transform: translateY(2px);
+    box-shadow: inset 0 4px #c789d2;
+}
+
 /* === Animations === */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.1);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes float {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-@keyframes lightRotation {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -262,49 +256,16 @@ h1 {
     }
 }
 
-@keyframes buttonPulse {
+@keyframes pulse {
     0% {
         transform: scale(1);
     }
 
     50% {
-        transform: scale(1.02);
+        transform: scale(1.1);
     }
 
     100% {
         transform: scale(1);
     }
-}
-
-/* === Ambient Light Effects === */
-body::after {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-    animation: lightRotation 20s linear infinite;
-    z-index: -1;
-}
-
-body::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: url('https://www.transparenttextures.com/patterns/foggy-birds.png');
-    opacity: 0.03;
-    z-index: -2;
-}
-
-/* === Entry Animations === */
-main,
-.container,
-.box,
-#msg,
-#reset-btn,
-#new-btn {
-    animation: fadeIn 1s ease both;
 }

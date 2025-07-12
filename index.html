@@ -4,18 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-        href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Dancing+Script:wght@700&display=swap"
-        rel="stylesheet">
-
+    <title>Tic-Tac-Toe vs CPU</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <main>
         <h1>Tic-Tac-Toe</h1>
-        <div class="container">
+
+        <!-- Symbol Selection Modal -->
+        <div class="modal" id="symbolModal">
+            <div class="modal-content">
+                <h2>Select Your Symbol</h2>
+                <div class="options">
+                    <button class="option-btn" data-symbol="X">X</button>
+                    <button class="option-btn" data-symbol="O">O</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Difficulty Selection Modal -->
+        <div class="modal hide" id="difficultyModal">
+            <div class="modal-content">
+                <h2>Select Difficulty</h2>
+                <div class="options">
+                    <button class="option-btn" data-level="easy">Easy</button>
+                    <button class="option-btn" data-level="medium">Medium</button>
+                    <button class="option-btn" data-level="hard">Hard</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Board -->
+        <div class="container hide" id="gameContainer">
             <div class="game">
                 <button class="box"></button>
                 <button class="box"></button>
@@ -27,12 +48,12 @@
                 <button class="box"></button>
                 <button class="box"></button>
             </div>
-            <div class="result-container">
-                <p id="result-msg"></p>
-            </div>
+
+            <div id="result-msg"></div>
             <button id="reset-btn">Reset Game</button>
         </div>
     </main>
+
     <script src="app.js"></script>
 </body>
 
